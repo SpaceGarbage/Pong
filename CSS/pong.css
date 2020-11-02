@@ -1,6 +1,10 @@
 body{
     background-color: #8000;
-    color: #fff; 
+    color: #fff;
     font-family: monospace;
 
+}
+
+#Terrain{
+    border: 1px solid white;
 }
