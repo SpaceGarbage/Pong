@@ -1,3 +1,7 @@
+/** C'est vraiment super **/
+
+/** Paramètrage arrière plan **/
+
 body{
     background-color: #000;
     color: #fff;
@@ -5,16 +9,28 @@ body{
 
 }
 
-#Terrain{
+/** Définir les délimitations du terrain **/
+
+#terrain{
+    position: relative;
     border: 1px solid white;
     
     width:800px;
     height:400px;
 }
 
-#Balle{
+/** Paramètrage balle **/
+
+#balle{
+    position: absolute;
+    top: 50%;
+    left: 50%;  
     width:20px;
     height:20px;
+    border-radius: 100%;
     background-color: white; 
-    border-radius: 8px;
+    
 }
+
+
+/** Centrer Pong, faire bouger balle **/
