@@ -1,6 +1,4 @@
-/** C'est vraiment super **/
-
-/** Paramètrage arrière plan **/
+/** Paramètrage de l'arrière plan **/
 
 body{
     background-color: #000;
@@ -19,7 +17,7 @@ body{
     height:400px;
 }
 
-/** Paramètrage balle **/
+/** Paramètrage graphique de la balle **/
 
 #balle{
     position: absolute;
@@ -32,5 +30,13 @@ body{
     
 }
 
+/** Permet de centrer les éléments dans la page **/ 
 
-/** Centrer Pong, faire bouger balle **/
+body{	
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
