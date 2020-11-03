@@ -1,2 +1,3 @@
 # Pong
-Ping. Ahahaha c'est une blague. Get it... Funny ! Poggers 
+Poggers 
+Lien du projet : https://SpaceGarbage.github.io/Pong/index.html
