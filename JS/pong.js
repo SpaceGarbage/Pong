@@ -1,8 +1,3 @@
-//Définir les variables du script
-
-let largeur=$("#balle").width();
-let gauche=parseInt($("#balle").css("left"));
-let haut=parseInt($("#balle").css("top"));
 
 //Script terrain
 class Terrain{
@@ -22,6 +17,8 @@ class Balle{
         this.vitesseX=2;
         this.vitesseY=0.5;
         this.diametre=$element.height();
+        this.sensx= 1;
+        this.sensy= 1;
     }
 
     majHTML(){
@@ -32,29 +29,38 @@ class Balle{
 
 //Script déplacement de la balle
 setInterval(function(){
-    balle.gauche=balle.gauche+balle.vitesseX; 
-    balle.haut=balle.haut+balle.vitesseY;
+    balle.gauche=balle.gauche+balle.vitesseX*balle.sensx; 
+    balle.haut=balle.haut+balle.vitesseY*balle.sensy;
  
     if(balle.gauche>terrain.largeur-balle.diametre){
-        balle.gauche=terrain.largeur-balle.diametre;
-        balle.vitesseX=balle.vitesseX*-1;
+        balle.gauche=terrain.largeur-balle.diametre;  
+        balle.sensx=-1;
     }
     if(balle.gauche<0){
-        balle.gauche=0;
-        balle.vitesseX=balle.vitesseX*-1;
+        balle.gauche=0;  
+        balle.sensx=1;
     }
     if(balle.haut>terrain.hauteur-balle.diametre){
-        balle.haut=terrain.hauteur-balle.diametre;
-        balle.vitesseY=balle.vitesseY*-1;
+        balle.haut=terrain.hauteur-balle.diametre;   
+        balle.sensy=-1;
     }
     if(balle.haut<0){
         balle.haut=0;
-        balle.vitesseY=balle.vitesseY*-1;
+        balle.sensy=1;
     }
 
     balle.majHTML();
 
 }, 10);
 
+//Définir les variables du script
+
+let largeur=$("#balle").width();
+let gauche=parseInt($("#balle").css("left"));
+let haut=parseInt($("#balle").css("top"));
+
 let terrain=new Terrain($("#terrain"));
 let balle=new Balle($("#balle"));
+
+balle.sensx = balle.sensx * (Math.random() < 0.5) ? -1 : 1;
+balle.sensy = balle.sensy * (Math.random() < 0.5) ? -1 : 1;
