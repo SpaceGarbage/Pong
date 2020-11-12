@@ -1,52 +1,55 @@
 
 //Script terrain
-class Terrain{
-    constructor($element){
-        this.$element=$element;
-        this.largeur=$element.width();
-        this.hauteur=$element.height();
+
+class Terrain {
+    constructor($element) {
+        this.$element = $element;
+        this.largeur = $element.width();
+        this.hauteur = $element.height();
     }
 }
 
 //Script vitesse de la balle 
-class Balle{
-    constructor($element){
-        this.$element=$element;
-        this.gauche=parseInt($("#balle").css("left"));
-        this.haut=parseInt($("#balle").css("top"));
-        this.vitesseX=2;
-        this.vitesseY=0.5;
-        this.diametre=$element.height();
-        this.sensx= 1;
-        this.sensy= 1;
+
+class Balle {
+    constructor($element) {
+        this.$element = $element;
+        this.gauche = parseInt($("#balle").css("left"));
+        this.haut = parseInt($("#balle").css("top"));
+        this.vitesseX = 2;
+        this.vitesseY = 0.5;
+        this.diametre = $element.height();
+        this.sensx = 1;
+        this.sensy = 1;
     }
 
-    majHTML(){
-        this.$element.css("left",balle.gauche);
-        this.$element.css("top",balle.haut);
+    majHTML() {
+        this.$element.css("left", balle.gauche);
+        this.$element.css("top", balle.haut);
     }
 }
 
 //Script déplacement de la balle
-setInterval(function(){
-    balle.gauche=balle.gauche+balle.vitesseX*balle.sensx; 
-    balle.haut=balle.haut+balle.vitesseY*balle.sensy;
- 
-    if(balle.gauche>terrain.largeur-balle.diametre){
-        balle.gauche=terrain.largeur-balle.diametre;  
-        balle.sensx=-1;
+
+setInterval(function () {
+    balle.gauche = balle.gauche + balle.vitesseX * balle.sensx;
+    balle.haut = balle.haut + balle.vitesseY * balle.sensy;
+
+    if (balle.gauche > terrain.largeur - balle.diametre) {
+        balle.gauche = terrain.largeur - balle.diametre;
+        balle.sensx = -1;
     }
-    if(balle.gauche<0){
-        balle.gauche=0;  
-        balle.sensx=1;
+    if (balle.gauche < 0) {
+        balle.gauche = 0;
+        balle.sensx = 1;
     }
-    if(balle.haut>terrain.hauteur-balle.diametre){
-        balle.haut=terrain.hauteur-balle.diametre;   
-        balle.sensy=-1;
+    if (balle.haut > terrain.hauteur - balle.diametre) {
+        balle.haut = terrain.hauteur - balle.diametre;
+        balle.sensy = -1;
     }
-    if(balle.haut<0){
-        balle.haut=0;
-        balle.sensy=1;
+    if (balle.haut < 0) {
+        balle.haut = 0;
+        balle.sensy = 1;
     }
 
     balle.majHTML();
@@ -55,12 +58,14 @@ setInterval(function(){
 
 //Définir les variables du script
 
-let largeur=$("#balle").width();
-let gauche=parseInt($("#balle").css("left"));
-let haut=parseInt($("#balle").css("top"));
+let largeur = $("#balle").width();
+let gauche = parseInt($("#balle").css("left"));
+let haut = parseInt($("#balle").css("top"));
 
-let terrain=new Terrain($("#terrain"));
-let balle=new Balle($("#balle"));
+let terrain = new Terrain($("#terrain"));
+let balle = new Balle($("#balle"));
+
+//Sens balle aléatoire
 
 balle.sensx = balle.sensx * (Math.random() < 0.5) ? -1 : 1;
 balle.sensy = balle.sensy * (Math.random() < 0.5) ? -1 : 1;
