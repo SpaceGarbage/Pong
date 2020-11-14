@@ -43,6 +43,30 @@ class Raquette {
         this.direction = 1;
         this.vitesse = 3;
     }
+    mouvement() {
+        this.positionY += this.vitesse * this.direction;
+        this.limite();
+        this.majHTML();
+    }
+
+    rebond() {
+        this.direction *= -1;
+    }
+
+    majHTML() {
+        this.$element.css("top", this.positionY);
+    }
+
+    bordure() {
+        if (this.positionY + this.hauteur > terrain.hauteur) {
+            this.positionY = terrain.hauteur - this.hauteur;
+            this.changeDirection();
+        }
+        if (this.positionY < 0) {
+            this.positionY = 0;
+            this.changeDirection();
+        }
+    }
 }
 
 //Script déplacement de la balle
@@ -81,7 +105,19 @@ let haut = parseInt($("#balle").css("top"));
 let terrain = new Terrain($("#terrain"));
 let balle = new Balle($("#balle"));
 
+let raquettegauche = new Raquette($("#gauche"));
+let raquettedroite = new Raquette($("#droite"));
+
 //Sens balle aléatoire
 
 balle.sensx = balle.sensx * (Math.random() < 0.5) ? -1 : 1;
 balle.sensy = balle.sensy * (Math.random() < 0.5) ? -1 : 1;
+
+//Boucle pour les fonctions précédentes
+
+setInterval(function(){
+    balle.majHTML();
+    balle.bouger();
+    raquettegauche.bouger();
+    raquettedroite.bouger();
+    }, 10);
