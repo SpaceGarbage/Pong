@@ -1,4 +1,3 @@
-
 //Script terrain
 
 class Terrain {
@@ -26,6 +25,23 @@ class Balle {
     majHTML() {
         this.$element.css("left", balle.gauche);
         this.$element.css("top", balle.haut);
+    }
+}
+
+//Définir les paramètres de la raquette 
+
+class Raquette {
+    constructor($element) {
+        this.$element = $element;
+
+        this.largeur = $element.width();
+        this.hauteur = $element.height();
+
+        this.positionX = parseInt($element.css("left"));
+        this.positionY = parseInt($element.css("top"));
+
+        this.direction = 1;
+        this.vitesse = 3;
     }
 }
 

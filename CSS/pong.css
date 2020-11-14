@@ -31,6 +31,25 @@ body{
     
 }
 
+/** Paramètrage graphique des raquettes **/
+
+.raquette{
+    
+    position: absolute;
+    /** Définir une variable **/
+    --hauteur: 25%;
+    /** Réalise des calculs pour déterminer la valeur d'une propriété CSS. **/
+    top : calc( 50% - var(--hauteur)/2 ); 
+
+    width: 10px;
+    height: var(--hauteur);
+    background-color: #fff;
+}
+#droite{
+    right: 1%;}
+#gauche{
+    left: 1%;}
+
 /** Permet de centrer les éléments dans la page **/ 
 
 body{	
