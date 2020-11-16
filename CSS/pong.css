@@ -1,4 +1,3 @@
-/** Paramètrage de l'arrière plan **/
 
 body{
     background-color: #000;
@@ -7,52 +6,65 @@ body{
 
 }
 
-/** Définir les délimitations du terrain **/
+/** Paramètres du terrain **/
 
 #terrain{
     position: relative;
-    border-top : 1px solid white;
-    border-bottom : 1px solid white;
+    border: 1px solid #000;
+	border-top-color: #fff;
+    border-bottom-color: #fff;
     
     width:800px;
     height:400px;
 }
 
-/** Paramètrage graphique de la balle **/
+.vert{
+	border-top-color: #0f0 !important;
+    border-bottom-color: #0f0 !important;
+}
+
+.rouge{
+	border-top-color: #f00 !important;
+    border-bottom-color: #f00 !important;
+}
+
+/** Paramètres de la balle **/
 
 #balle{
     position: absolute;
     top: 50%;
     left: 50%;  
-    width:20px;
-    height:20px;
+    width:15px;
+    height:15px;
     border-radius: 100%;
     background-color: white; 
     
 }
 
-/** Paramètrage graphique des raquettes **/
-
 .raquette{
-    
-    position: absolute;
-    /** Définir une variable **/
-    --hauteur: 25%;
-    /** Réalise des calculs pour déterminer la valeur d'une propriété CSS. **/
-    top : calc( 50% - var(--hauteur)/2 ); 
-
-    width: 10px;
-    height: var(--hauteur);
-    background-color: #fff;
+	position: absolute;
+    width:10px;
+    height:75px;
+    background-color: white;
 }
-#droite{
-    right: 1%;}
-#gauche{
-    left: 1%;}
 
-/** Permet de centrer les éléments dans la page **/ 
+.rtouche{
+	background-color: #0f0 !important;
+}
 
-body{	
+#rgauche{
+    left: 0;
+	top: 50%;
+}
+
+#rdroite{
+    left: 0;
+	top: 50%;
+}
+
+/** Centrer le contenu **/
+
+body{    
     display: flex;
     min-height: 100vh;
     flex-direction: column;

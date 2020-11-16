@@ -1,123 +1,168 @@
-//Script terrain
-
-class Terrain {
-    constructor($element) {
-        this.$element = $element;
-        this.largeur = $element.width();
-        this.hauteur = $element.height();
-    }
-}
-
-//Script vitesse de la balle 
-
-class Balle {
-    constructor($element) {
-        this.$element = $element;
-        this.gauche = parseInt($("#balle").css("left"));
-        this.haut = parseInt($("#balle").css("top"));
-        this.vitesseX = 2;
-        this.vitesseY = 0.5;
-        this.diametre = $element.height();
-        this.sensx = 1;
-        this.sensy = 1;
-    }
-
-    majHTML() {
-        this.$element.css("left", balle.gauche);
-        this.$element.css("top", balle.haut);
-    }
-}
-
-//Définir les paramètres de la raquette 
-
-class Raquette {
-    constructor($element) {
-        this.$element = $element;
-
-        this.largeur = $element.width();
-        this.hauteur = $element.height();
-
-        this.positionX = parseInt($element.css("left"));
-        this.positionY = parseInt($element.css("top"));
-
-        this.direction = 1;
-        this.vitesse = 3;
-    }
-    mouvement() {
-        this.positionY += this.vitesse * this.direction;
-        this.limite();
-        this.majHTML();
-    }
-
-    rebond() {
-        this.direction *= -1;
-    }
-
-    majHTML() {
-        this.$element.css("top", this.positionY);
-    }
-
-    bordure() {
-        if (this.positionY + this.hauteur > terrain.hauteur) {
-            this.positionY = terrain.hauteur - this.hauteur;
-            this.changeDirection();
-        }
-        if (this.positionY < 0) {
-            this.positionY = 0;
-            this.changeDirection();
-        }
-    }
-}
+//Définir les variables du script
+/*
+let largeur=$("#balle").width();
+let gauche=parseInt($("#balle").css("left"));
+let haut=parseInt($("#balle").css("top"));*/
 
 //Script déplacement de la balle
-
-setInterval(function () {
-    balle.gauche = balle.gauche + balle.vitesseX * balle.sensx;
-    balle.haut = balle.haut + balle.vitesseY * balle.sensy;
-
-    if (balle.gauche > terrain.largeur - balle.diametre) {
-        balle.gauche = terrain.largeur - balle.diametre;
-        balle.sensx = -1;
-    }
-    if (balle.gauche < 0) {
-        balle.gauche = 0;
-        balle.sensx = 1;
-    }
-    if (balle.haut > terrain.hauteur - balle.diametre) {
-        balle.haut = terrain.hauteur - balle.diametre;
-        balle.sensy = -1;
-    }
-    if (balle.haut < 0) {
-        balle.haut = 0;
-        balle.sensy = 1;
-    }
-
-    balle.majHTML();
-
+setInterval(function(){
+	
+	balle.collision();
+    balle.bouge(); 
+	
+	
+	raquetteGauche.bouge(), raquetteGauche.majGCSS(), raquetteGauche.rebondG();
+	raquetteDroite.bouge(), raquetteDroite.majDCSS(), raquetteDroite.rebondD();
+	
 }, 10);
 
-//Définir les variables du script
+class Terrain{
+    constructor($element){
+        this.$element=$element
+        this.largeur=$element.width();
+        this.hauteur=$element.height();
+    }
+}
 
-let largeur = $("#balle").width();
-let gauche = parseInt($("#balle").css("left"));
-let haut = parseInt($("#balle").css("top"));
+class Raquette{
+    constructor($element){
+        this.$element=$element;
+        this.largeur=$element.width();
+        this.hauteur=$element.height();
+        this.posx=parseInt($element.css("left"));
+        this.posy=parseInt($element.css("top"));
+        this.speedy=4;
+        this.sensy=1;
+	}
+	
+	bouge(){
+		//Collisions terrain
+		 if (this.posy > terrain.hauteur - this.hauteur){
+			this.sensy = -1;
+		 }
+		 else if (this.posy < 0){
+			 this.sensy = 1;
+		 }
+		 this.posy = this.posy + this.speedy * this.sensy;
+		 
+	}
+	
+	
+	 majGCSS(){
+        // Actualisation du CSS
+        $("#rgauche").css("left",this.posx); 
+        $("#rgauche").css("top",this.posy);
+	 }
+	 
+	 majDCSS(){
+        // Actualisation du CSS
+        $("#rdroite").css("left",this.posx); 
+        $("#rdroite").css("top",this.posy);
+	 }
+	 
+	 rebondG(){
+		 
+		 if(this.posx < balle.posx && balle.posx < this.posx + this.largeur){
+				if(this.posy <= balle.posy && balle.posy <= this.posy + this.hauteur){
+					console.log("bonk G");
+					this.$element.addClass("rtouche");
+					setTimeout(function(){raquetteGauche.$element.removeClass("rtouche")},100);
+					balle.posx += balle.diametre / 2;
+					balle.sensx = 1;
+				}
+		 }
+	}
+	
+	rebondD(){
+		 
+		 if(this.posx - balle.diametre < balle.posx && balle.posx < this.posx + this.largeur){
+				if(this.posy <= balle.posy && balle.posy <= this.posy + this.hauteur){
+					console.log("bonk D");
+					this.$element.addClass("rtouche");
+					setTimeout(function(){raquetteDroite.$element.removeClass("rtouche")},100);
+					balle.posx -= balle.diametre / 2;
+					balle.sensx = -1;
+				}
+		 }
+	}
+	 
+ }
 
-let terrain = new Terrain($("#terrain"));
-let balle = new Balle($("#balle"));
+class Balle{
+    constructor($element){
+        this.$element=$element
+        this.largeur=$element.width();
+        this.hauteur=$element.height();
+        this.posy=parseInt($("#balle").css("top"));
+        this.posx=parseInt($("#balle").css("left"));
+        this.speedx=4;
+        this.speedy=2
+        this.sensx=1;
+        this.sensy=1;
+        this.diametre=15;
 
-let raquettegauche = new Raquette($("#gauche"));
-let raquettedroite = new Raquette($("#droite"));
+    }
+	
+	
+    bouge(){
+        // Vitesse de déplacement
+        this.posx = this.posx + this.speedx * this.sensx;
+        this.posy = this.posy + this.speedy * this.sensy;
+        // Actualisation du CSS
+        $("#balle").css("left",this.posx); 
+        $("#balle").css("top",this.posy);
+	}
+	collision(){
+        // Collisions avec le terrain
+        if(this.posx > terrain.largeur - this.diametre){
+            this.posx = terrain.largeur - this.diametre;
+            this.sensx = -1;
+            terrain.$element.addClass("rouge");
+            setTimeout(function(){terrain.$element.removeClass("rouge")},1000 );
+        }
+    
+        else if(this.posx < 0 ){
+            this.posx = 0;
+            this.sensx = 1;
+            terrain.$element.addClass("rouge");
+            setTimeout(function(){terrain.$element.removeClass("rouge")},1000);
+        }
+    
+        else if(this.posy > terrain.hauteur - this.diametre){
+            this.posy = terrain.hauteur - this.diametre;
+            this.sensy = -1;
+            terrain.$element.addClass("vert");
+            setTimeout(function(){terrain.$element.removeClass("vert")},100);
+        }
+    
+        else if(this.posy < 0){
+            this.posy = 0;
+            this.sensy = 1;
+            terrain.$element.addClass("vert");
+            setTimeout(function(){terrain.$element.removeClass("vert")},100);
+        }
 
-//Sens balle aléatoire
+        
+    }
+}
 
+
+
+//Création d'un terrian + balle + raquettes
+let terrain=new Terrain($("#terrain"));
+let balle=new Balle($("#balle"));
+let raquetteGauche=new Raquette($("#rgauche"));
+let raquetteDroite=new Raquette($("#rdroite"));
+
+// Position X fixe
+raquetteGauche.posx = 20;
+raquetteDroite.posx = terrain.largeur - 20 - raquetteDroite.largeur;
+
+console.log(raquetteGauche.hauteur);
+
+// Position et sens de départ de la balle aléatoire
+balle.posx = Math.random() * terrain.largeur;
+balle.posy = Math.random() * terrain.hauteur;
 balle.sensx = balle.sensx * (Math.random() < 0.5) ? -1 : 1;
 balle.sensy = balle.sensy * (Math.random() < 0.5) ? -1 : 1;
-
-//Boucle pour les fonctions précédentes
-
-setInterval(function(){
-    balle.majHTML();
-    balle.bouger();
-    raquettegauche.bouger();
-    raquettedroite.bouger();
-    }, 10);
+console.log(terrain);
