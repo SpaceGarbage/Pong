@@ -1,59 +1,107 @@
-  
+// On créait une classe pour définir les paramètres de la balle
 class Balle{
     constructor($element){
-        this.$element=$element
-        this.largeur=$element.width();
-        this.hauteur=$element.height();
-        this.posy=parseInt($("#balle").css("top"));
-        this.posx=parseInt($("#balle").css("left"));
-        this.speedx=4;
-        this.speedy=2
-        this.sensx=1;
-        this.sensy=1;
-        this.diametre=15;
+        this.$element = $element;
+
+        this.hauteur = $element.height();
+        this.largeur = $element.width();
+
+        this.positionX = parseInt($element.css("left"));
+        this.positionY = parseInt($element.css("top"));
+
+        this.vitesseX = 4;
+        this.vitesseY = 1;
+        this.angle = Math.random() * 2 * Math.PI;
+    }
+
+    get bas(){
+        return this.positionY + this.hauteur;
+    }
+
+    set bas(value){
+        this.positionY = value - this.hauteur;
+    }
+
+    get droite(){
+        return this.positionX + this.largeur;
+    }
+
+    set droite(value){
+        this.positionX = value - this.largeur;
+    }
+
+    bouger(){
+        this.positionX += Math.cos(this.angle) * this.vitesseX;
+        this.positionY += Math.sin(this.angle) * this.vitesseY;
+
+        this.limite();
+        this.majHTML();
+    }
+
+    /* On définit les limites qui sont indispensables pour restreindre le déplacement des raquettes et de la balle à l'intérieur
+    du terrain. Elles permettent donc de paramétrer/définir les rebonds que l'on souhaite qu'elles effectuent sur ces limites */
+    limite(){
+
+        //Limites du terrain et rebonds sur elles
+        //Gauche
+        if(this.positionX < 0){
+            terrain.tiltGauche();
+            this.positionX = 0;
+            this.vitesseX *= -1;
+            this.recentrer();
+        }
+    
+        //Droite
+        if( this.droite > terrain.largeur){
+            terrain.tiltDroite();
+            this.droite = terrain.largeur;
+            this.vitesseX *= -1;
+            this.recentrer();
+        }
+        
+        //Haut
+        if(this.positionY < 0){
+            terrain.tiltHaut();
+            this.positionY = 0;
+            this.vitesseY *= -1;
+        }
+
+        //Bas
+        if( this.bas > terrain.hauteur){
+            terrain.tiltBas();
+            this.bas = terrain.hauteur;
+            this.vitesseY *= -1;
+        }
+
+        //Limites des raquettes et rebonds sur elles
+        //Gauche
+        if(this.positionX < raquetteGauche.droite){
+            if(this.bas > raquetteGauche.positionY){
+                if(this.positionY < raquetteGauche.bas){
+                    this.vitesseX *= -1;
+                }
+            }
+        }
+
+        //Droite
+        if(this.droite > raquetteDroite.positionX){
+            if(this.bas > raquetteDroite.positionY){
+                if(this.positionY < raquetteDroite.bas){
+                    this.vitesseX *= -1;
+                }
+            }
+        }
 
     }
 
-
-    bouge(){
-        // Vitesse de déplacement
-        this.posx = this.posx + this.speedx * this.sensx;
-        this.posy = this.posy + this.speedy * this.sensy;
-        // Actualisation du CSS
-        $("#balle").css("left",this.posx);
-        $("#balle").css("top",this.posy);
-		balle.collision();
+    recentrer(){
+        this.positionX = terrain.largeur / 2 - this.largeur / 2;
+        this.positionY = terrain.hauteur / 2 - this.hauteur / 2;
     }
-    collision(){
-        // Collisions avec le terrain
-        if(this.posx > terrain.largeur - this.diametre){
-            this.posx = terrain.largeur - this.diametre;
-            this.sensx = -1;
-            terrain.$element.addClass("rouge");
-            setTimeout(function(){terrain.$element.removeClass("rouge")},1000 );
-        }
 
-        else if(this.posx < 0 ){
-            this.posx = 0;
-            this.sensx = 1;
-            terrain.$element.addClass("rouge");
-            setTimeout(function(){terrain.$element.removeClass("rouge")},1000);
-        }
-
-        else if(this.posy > terrain.hauteur - this.diametre){
-            this.posy = terrain.hauteur - this.diametre;
-            this.sensy = -1;
-            terrain.$element.addClass("vert");
-            setTimeout(function(){terrain.$element.removeClass("vert")},100);
-        }
-
-        else if(this.posy < 0){
-            this.posy = 0;
-            this.sensy = 1;
-            terrain.$element.addClass("vert");
-            setTimeout(function(){terrain.$element.removeClass("vert")},100);
-        }
-
-
+    majHTML(){
+        this.$element.css("left",balle.positionX);
+        this.$element.css("top",balle.positionY);
     }
+
 }
