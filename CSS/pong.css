@@ -2,7 +2,7 @@
 /** id > class **/
 
 body{
-    /** permet de centrer les éléments sur la page **/
+    /** Permet de centrer les éléments de la page **/
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -10,14 +10,14 @@ body{
     align-items: center;
     text-align: center; 
     
-    /** on défini les paramètres corps: couleurs, position **/
+    /** on définit les paramètres corps : couleurs, position **/
     background-color: #000000;
     color: #ffffff;
     font-family: monospace;
     
 }
 
-/** on défini les paramètres du terrain: paramètres de la bordure, couleur,position **/
+/** On définit les paramètres du terrain: paramètres de la bordure, couleur, position **/
 #terrain{
     
     width: 800px;
@@ -45,7 +45,7 @@ body{
     border-right-color: rgb(250, 0, 0) !important;
 }
 
-/** on défini les paramètres de la balle: dimensions, couleur,position **/
+/** On définit les paramètres de la balle: dimensions, couleur, position **/
 #balle{
     
     width: 20px;
@@ -58,7 +58,7 @@ body{
     
 }
 
-/** on défini les paramètres de la raquette: dimension, couleur, position , insérer une variable -> calculer la variable **/
+/** On définit les paramètres de la raquette: dimensions, couleur, position, insérer une variable -> calculer la variable **/
 .raquette{
     
     position: absolute;

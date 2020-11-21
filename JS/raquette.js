@@ -1,8 +1,8 @@
-  
-// On créait une classe pour définir les paramètres de la raquette
-class Raquette{
-    constructor($element){
-        
+
+/* Classe pour définir les paramètres de la raquette */
+class Raquette {
+    constructor($element) {
+
         this.$element = $element;
         this.hauteur = $element.height();
         this.largeur = $element.width();
@@ -12,50 +12,50 @@ class Raquette{
         this.vitesse = 3;
     }
 
-    get bas(){
+    get bas() {
         return this.positionY + this.hauteur;
     }
 
-    set bas(value){
+    set bas(value) {
         this.positionY = value - this.hauteur;
     }
 
-    get droite(){
+    get droite() {
         return this.positionX + this.largeur;
     }
 
-    set droite(value){
+    set droite(value) {
         this.positionX = value - this.largeur;
     }
 
-    bouger(){
+    bouger() {
         this.positionY += this.vitesse * this.direction;
         this.limite();
         this.majHTML();
     }
 
-    monter(){
+    monter() {
         this.direction = -1;
     }
 
-    descendre(){
+    descendre() {
         this.direction = 1;
     }
 
-    arret(){
+    arret() {
         this.direction = 0;
     }
 
-    majHTML(){
+    majHTML() {
         this.$element.css("top", this.positionY);
     }
 
-    limite(){
-        if (this.bas > terrain.hauteur){
+    limite() {
+        if (this.bas > terrain.hauteur) {
             this.bas = terrain.hauteur;
             this.arret();
         }
-        if (this.positionY < 0){
+        if (this.positionY < 0) {
             this.positionY = 0;
             this.arret();
         }
