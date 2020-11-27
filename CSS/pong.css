@@ -80,3 +80,19 @@ body{
 #gauche{
     left: 1%;
 }
+
+.joueur{
+	position: absolute;
+	top: 20%;
+	font-size: 22px;
+}
+
+#jgauche{
+    left: 20%;
+	color: blue;
+}
+
+#jdroite{
+    left: 80%;
+	color: red;
+}
